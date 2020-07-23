@@ -1,0 +1,52 @@
+{
+	"info": {
+		"_postman_id": "3f669440-3732-4a78-932a-ea5fb77c6d15",
+		"name": "rekabe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET simple sum challenge",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/challenge/simple_sum",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"challenge",
+						"simple_sum"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET simple sum with blanks challenge",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/challenge/simple_sum_with_blanks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"challenge",
+						"simple_sum_with_blanks"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

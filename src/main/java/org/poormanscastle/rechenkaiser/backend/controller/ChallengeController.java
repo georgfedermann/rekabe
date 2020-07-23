@@ -22,8 +22,7 @@ public class ChallengeController {
     @GetMapping("/rest/challenge/{challengeType}")
     public Challenge getChallenge(@PathVariable String challengeType) {
         Challenge challenge = challengeGenerator.generateChallenge(
-                Zahlenraum.HUNDRED, ChallengeType.valueOf(challengeType));
+                Zahlenraum.HUNDRED, ChallengeType.valueOf(challengeType.toUpperCase()));
         return challenge;
     }
-
 }
