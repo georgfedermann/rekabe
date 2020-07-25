@@ -30,14 +30,4 @@ class ChallengeGeneratorTest {
                 challenge.getPretty(), challenge.getExpectedResult());
     }
 
-    @Test
-    public void numberGeneratorTest() {
-        Zahlenraum zahlenraum = Zahlenraum.TEN;
-        Set<Integer> results = new HashSet<>();
-        for (int c = 0; c < 1000; c++) {
-            results.add(zahlenraum.getNumber());
-        }
-        assertThat(results).containsExactly(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-    }
-
 }

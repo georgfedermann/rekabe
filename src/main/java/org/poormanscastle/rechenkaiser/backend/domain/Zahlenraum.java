@@ -1,5 +1,10 @@
 package org.poormanscastle.rechenkaiser.backend.domain;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class Zahlenraum {
     /**
      * inclusive lower border
@@ -25,10 +30,37 @@ public class Zahlenraum {
     }
 
     /**
+     * Numbers are picked with a homogenous probability over the complete number range.
      * @return a random number that belongs to the range represented by this zahlenraum.
      */
     public int getNumber() {
         return (int) (Math.random() * (getIntervalWidth() + 1));
+    }
+
+    /**
+     * Probability that the returned number n > median of range is 7/8.
+     * Thus, use this method if you need a bias for higher numbers in the allowed range,
+     * e.g. for a bias towards more demanding drill questions.
+     * @return a random number that belongs to the range represented by this zahlenraum.
+     */
+    public int getHeighestOfThree() {
+        return Stream.generate(() -> getNumber()).limit(3).max(Integer::compare).get();
+    }
+
+    /**
+     * Drastically reduce the probabilities for numbers in the upper and lower fifth
+     * of the range.
+     * Thus, use this method if you need a bias for numbers in the middle 3 fifths of the range.
+     * @return a random number that belongs to the range represented by this zahlenraum.
+     */
+    public int getMediumOfThree() {
+        List<Integer> result = Stream.generate(() ->getNumber()).limit(3)
+                .sorted(Comparator.naturalOrder())
+                .skip(1)
+                .limit(1)
+                .collect(Collectors.toList());
+        result.stream().forEach(System.out::println);
+        return result.get(0);
     }
 
     /**

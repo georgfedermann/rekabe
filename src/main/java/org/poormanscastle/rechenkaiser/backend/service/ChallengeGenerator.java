@@ -22,13 +22,18 @@ public class ChallengeGenerator {
     }
 
     private Challenge generateSimpleSumWithBlanks(Zahlenraum zahlenraum) {
-//        int sum = (int) (Math.random() * zahlenraum.getIntervalWidth()) +
-        return null;
+        int sum = zahlenraum.getHeighestOfThree();
+        int summand1 = zahlenraum.getNumberLessThanOrEqual(sum);
+        int summand2 = sum - summand1;
+        String pretty = String.format("%s + __ = %s", summand1, sum);
+        Challenge challenge = new Challenge(UUID.randomUUID().toString(), pretty, summand2);
+        challenge.setChallengeType(ChallengeType.SIMPLE_SUM_WITH_BLANKS);
+        return challenge;
     }
 
     private Challenge generateSimpleSumChallenge(Zahlenraum zahlenraum) {
-        int sum = zahlenraum.getNumber();
-        int summand1 = (int) (Math.random() * (sum - zahlenraum.getLowerBorder()));
+        int sum = zahlenraum.getHeighestOfThree();
+        int summand1 = zahlenraum.getNumberLessThanOrEqual(sum);
         int summand2 = sum - summand1;
         String pretty = String.format("%s + %s = __", summand1, summand2);
         Challenge challenge = new Challenge(UUID.randomUUID().toString(), pretty, sum);
