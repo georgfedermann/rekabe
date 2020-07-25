@@ -22,7 +22,7 @@ public class ChallengeGenerator {
     }
 
     private Challenge generateSimpleSumWithBlanks(Zahlenraum zahlenraum) {
-        int sum = zahlenraum.getNumber();
+        int sum = zahlenraum.getHeighestOfThree();
         int summand1 = zahlenraum.getNumberLessThanOrEqual(sum);
         int summand2 = sum - summand1;
         String pretty = String.format("%s + __ = %s", summand1, sum);
@@ -32,7 +32,7 @@ public class ChallengeGenerator {
     }
 
     private Challenge generateSimpleSumChallenge(Zahlenraum zahlenraum) {
-        int sum = zahlenraum.getNumber();
+        int sum = zahlenraum.getHeighestOfThree();
         int summand1 = zahlenraum.getNumberLessThanOrEqual(sum);
         int summand2 = sum - summand1;
         String pretty = String.format("%s + %s = __", summand1, summand2);
