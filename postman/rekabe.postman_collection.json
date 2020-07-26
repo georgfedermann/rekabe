@@ -27,6 +27,27 @@
 			"response": []
 		},
 		{
+			"name": "GET simple small multiplication table",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/rest/challenge/small_multiplication_table",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"challenge",
+						"small_multiplication_table"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET simple sum with blanks challenge",
 			"request": {
 				"method": "GET",

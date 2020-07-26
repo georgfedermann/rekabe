@@ -7,8 +7,7 @@ import org.poormanscastle.rechenkaiser.backend.domain.Zahlenraum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Optional;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -19,7 +18,7 @@ class ChallengeGeneratorTest {
     @Test
     public void generateSimpleSumChallengeTest() {
         Challenge challenge = new ChallengeGenerator().generateChallenge(
-                Zahlenraum.HUNDRED, ChallengeType.SIMPLE_SUM);
+                ChallengeType.SIMPLE_SUM, Optional.of(Zahlenraum.HUNDRED));
         assertThat(challenge.getChallengeId()).isNotEmpty();
         assertThat(challenge.getPretty()).isNotEmpty();
         assertThat(challenge.getPretty()).contains("=");
@@ -30,4 +29,11 @@ class ChallengeGeneratorTest {
                 challenge.getPretty(), challenge.getExpectedResult());
     }
 
+    @Test
+    public void generateSimpleSmallMultiplicationTable() {
+        Challenge challenge = new ChallengeGenerator().generateChallenge(
+                ChallengeType.SMALL_MULTIPLICATION_TABLE, Optional.empty());
+        assertThat(challenge.getChallengeId()).isNotEmpty();
+        assertThat(challenge.getPretty()).isNotEmpty();
+    }
 }
