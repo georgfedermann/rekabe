@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 public class ChallengeController {
 
@@ -22,7 +24,7 @@ public class ChallengeController {
     @GetMapping("/rest/challenge/{challengeType}")
     public Challenge getChallenge(@PathVariable String challengeType) {
         Challenge challenge = challengeGenerator.generateChallenge(
-                Zahlenraum.HUNDRED, ChallengeType.valueOf(challengeType.toUpperCase()));
+                ChallengeType.valueOf(challengeType.toUpperCase()), Optional.of(Zahlenraum.HUNDRED));
         return challenge;
     }
 }

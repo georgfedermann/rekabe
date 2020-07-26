@@ -19,6 +19,8 @@ public class Zahlenraum {
 
     public final static Zahlenraum TEN = new Zahlenraum(0, 10);
 
+    public final static Zahlenraum HUNDREDTWENTY = new Zahlenraum(0, 120);
+
     public Zahlenraum(int lowerBorder, int upperBorder) {
         if (upperBorder < lowerBorder) {
             throw new IllegalArgumentException(
@@ -31,6 +33,7 @@ public class Zahlenraum {
 
     /**
      * Numbers are picked with a homogenous probability over the complete number range.
+     *
      * @return a random number that belongs to the range represented by this zahlenraum.
      */
     public int getNumber() {
@@ -41,6 +44,7 @@ public class Zahlenraum {
      * Probability that the returned number n > median of range is 7/8.
      * Thus, use this method if you need a bias for higher numbers in the allowed range,
      * e.g. for a bias towards more demanding drill questions.
+     *
      * @return a random number that belongs to the range represented by this zahlenraum.
      */
     public int getHeighestOfThree() {
@@ -51,10 +55,11 @@ public class Zahlenraum {
      * Drastically reduce the probabilities for numbers in the upper and lower fifth
      * of the range.
      * Thus, use this method if you need a bias for numbers in the middle 3 fifths of the range.
+     *
      * @return a random number that belongs to the range represented by this zahlenraum.
      */
     public int getMediumOfThree() {
-        List<Integer> result = Stream.generate(() ->getNumber()).limit(3)
+        List<Integer> result = Stream.generate(() -> getNumber()).limit(3)
                 .sorted(Comparator.naturalOrder())
                 .skip(1)
                 .limit(1)

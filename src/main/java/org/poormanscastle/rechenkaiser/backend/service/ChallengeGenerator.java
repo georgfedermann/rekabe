@@ -2,23 +2,35 @@ package org.poormanscastle.rechenkaiser.backend.service;
 
 import org.poormanscastle.rechenkaiser.backend.domain.Challenge;
 import org.poormanscastle.rechenkaiser.backend.domain.ChallengeType;
+import org.poormanscastle.rechenkaiser.backend.domain.SmallMultiplicationTable;
 import org.poormanscastle.rechenkaiser.backend.domain.Zahlenraum;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class ChallengeGenerator {
 
-    public Challenge generateChallenge(Zahlenraum zahlenraum, ChallengeType challengeType) {
+    public Challenge generateChallenge(ChallengeType challengeType, Optional<Zahlenraum> zahlenraum) {
         switch (challengeType) {
             case SIMPLE_SUM:
-                return generateSimpleSumChallenge(zahlenraum);
+                return generateSimpleSumChallenge(zahlenraum.orElseGet(() -> Zahlenraum.HUNDRED));
             case SIMPLE_SUM_WITH_BLANKS:
-                return generateSimpleSumWithBlanks(zahlenraum);
+                return generateSimpleSumWithBlanks(zahlenraum.orElseGet(() -> Zahlenraum.HUNDRED));
+            case SMALL_MULTIPLICATION_TABLE:
+                return generateSimpleSmallMultiplicationTable();
             default:
                 throw new UnsupportedOperationException();
         }
+    }
+
+    private Challenge generateSimpleSmallMultiplicationTable() {
+        SmallMultiplicationTable smt = SmallMultiplicationTable.getRandom();
+        Challenge challenge = new Challenge(
+                UUID.randomUUID().toString(), smt.getPrettyClassic(), smt.getProduct());
+        challenge.setChallengeType(ChallengeType.SMALL_MULTIPLICATION_TABLE);
+        return challenge;
     }
 
     private Challenge generateSimpleSumWithBlanks(Zahlenraum zahlenraum) {
