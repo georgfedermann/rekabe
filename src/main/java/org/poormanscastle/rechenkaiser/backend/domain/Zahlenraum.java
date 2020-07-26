@@ -64,7 +64,6 @@ public class Zahlenraum {
                 .skip(1)
                 .limit(1)
                 .collect(Collectors.toList());
-        result.stream().forEach(System.out::println);
         return result.get(0);
     }
 
