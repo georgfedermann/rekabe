@@ -2,6 +2,14 @@
 node {
     stage('Build') {
         sh label: 'echo date', script: 'echo "Current timestamp is $(date)"'
+
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']],
+                  doGenerateSubmoduleConfigurations: false,
+                  extensions: [],
+                  submoduleCfg: [],
+                  userRemoteConfigs: [[name: 'github', refspec: '+refs/heads/master:refs/remotes/github/master',
+                                       url: 'https://github.com/georgfedermann/rekabe.git']]])
+
         echo "Branch name is ${env.BRANCH_NAME}"
         echo "Global variable params is ${params}"
         echo "Global variable currentBuild id ${currentBuild}"
