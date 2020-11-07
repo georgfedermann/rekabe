@@ -6,10 +6,10 @@ node {
         echo "Global variable params is ${params}"
         echo "Global variable currentBuild id ${currentBuild}"
 
-//                sh label: 'Build docker image', script: '''docker image build --tag "${dockerhub_u}/rekabe" . && env
-//docker login -u "${dockerhub_u}" -p "${dockerhub_p}" registry-1.docker.io
-//docker push "${dockerhub_u}/rekabe:latest"
-//'''
+        sh label: 'Build docker image', script: '''docker image build --tag "${dockerhub_u}/rekabe" . && env
+docker login -u "${dockerhub_u}" -p "${dockerhub_p}" registry-1.docker.io
+docker push "${dockerhub_u}/rekabe:latest"
+'''
     }
 
     stage('Deploy to QA') {
