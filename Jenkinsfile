@@ -36,9 +36,12 @@ node {
     stage('Deploy to PROD') {
         echo "Deploying to stage PROD"
         sshagent(credentials: ['centos_build_server_credentials']){
-            sh '''
-                ssh -p ${prod_machine_ssh_port} ${build_user}@${prod_machine} docker container rm -f rekabe 
-                && docker container run --name rekabe --network skynet -dp 18080:8080 --network-alias rekabe gap03/rekabe:latest
+            sh label: 'Deploy rekabe container', script: '''
+                ssh -p ${prod_machine_ssh_port} ${build_user}@${prod_machine} 
+                if docker container ls -a | grep rekabe; then 
+                    docker container rm -f rekabe
+                fi 
+                docker container run --name rekabe --network skynet -dp 18080:8080 --network-alias rekabe ${github_user}/rekabe:latest
 '''
         }
     }
