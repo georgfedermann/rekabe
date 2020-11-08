@@ -16,7 +16,7 @@ node {
         echo "Global variable params is ${params}"
         echo "Global variable currentBuild id ${currentBuild}"
 
-        withCredentials([usernamePassword(credentialsId:'docker_hub', passwordVariable: 'dockerhub_p', usernameVariable: 'dockerhub_u')]) {
+        withCredentials([usernamePassword(credentialsId: 'docker_hub', passwordVariable: 'dockerhub_p', usernameVariable: 'dockerhub_u')]) {
             sh label: 'Build docker image',
                     script: ''' docker image build --tag "${dockerhub_u}/rekabe" . || exit 1
                             docker login -u "${dockerhub_u}" -p "${dockerhub_p}" registry-1.docker.io
@@ -35,5 +35,11 @@ node {
 
     stage('Deploy to PROD') {
         echo "Deploying to stage PROD"
+        sshagent(credentials: ['centos_build_server_credentials']){
+            sh '''
+                ssh -p ${prod_machine_ssh_port} ${build_user}@${prod_machine} docker container rm -f rekabe 
+                && docker container run --name rekabe --network skynet -dp 18080:8080 --network-alias rekabe gap03/rekabe:latest
+'''
+        }
     }
 }
