@@ -1,4 +1,4 @@
-//noinspection GroovyAssignabilityCheck
+// noinspection GroovyAssignabilityCheck
 node {
     stage('Build') {
         sh label: 'echo date', script: 'echo "Current timestamp is $(date)"'
@@ -10,14 +10,19 @@ node {
                   userRemoteConfigs: [[name: 'github', refspec: '+refs/heads/master:refs/remotes/github/master',
                                        url: 'https://github.com/georgfedermann/rekabe.git']]])
 
-        echo "Branch name is ${env.BRANCH_NAME}"
+        echo "Job name is ${env.JOB_NAME}"
+        echo "Node name is ${env.NODE_NAME}"
+        echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
         echo "Global variable params is ${params}"
         echo "Global variable currentBuild id ${currentBuild}"
 
-        sh label: 'Build docker image', script: '''docker image build --tag "${dockerhub_u}/rekabe" . || exit 1
-docker login -u "${dockerhub_u}" -p "${dockerhub_p}" registry-1.docker.io
-docker push "${dockerhub_u}/rekabe:latest"
+        withCredentials([usernamePassword(credentialsId:'docker_hub', passwordVariable: dockerhub_p, usernameVariable: 'dockerhub_u')]) {
+            sh label: 'Build docker image',
+                    script: ''' docker image build --tag "${dockerhub_u}/rekabe" . || exit 1
+                            docker login -u "${dockerhub_u}" -p "${dockerhub_p}" registry-1.docker.io
+                            docker push "${dockerhub_u}/rekabe:latest"
 '''
+        }
     }
 
     stage('Deploy to QA') {
