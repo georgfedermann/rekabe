@@ -16,7 +16,7 @@ node {
         echo "Global variable params is ${params}"
         echo "Global variable currentBuild id ${currentBuild}"
 
-        withCredentials([usernamePassword(credentialsId:'docker_hub', passwordVariable: dockerhub_p, usernameVariable: 'dockerhub_u')]) {
+        withCredentials([usernamePassword(credentialsId:'docker_hub', passwordVariable: 'dockerhub_p', usernameVariable: 'dockerhub_u')]) {
             sh label: 'Build docker image',
                     script: ''' docker image build --tag "${dockerhub_u}/rekabe" . || exit 1
                             docker login -u "${dockerhub_u}" -p "${dockerhub_p}" registry-1.docker.io
